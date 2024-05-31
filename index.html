@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Flower Pattern</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="flowerCanvas" width="600" height="600"></canvas>
+    <script>
+        function drawFlower(ctx, x, y, petalCount, petalLength, petalWidth, rotation) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+
+            for (let i = 0; i < petalCount; i++) {
+                ctx.rotate((Math.PI * 2) / petalCount);
+
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.quadraticCurveTo(petalWidth / 2, -petalLength / 2, 0, -petalLength);
+                ctx.quadraticCurveTo(-petalWidth / 2, -petalLength / 2, 0, 0);
+                ctx.closePath();
+                ctx.fillStyle = 'rgba(255, 105, 180, 0.8)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 20, 147, 0.9)';
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        function drawPattern(rotation) {
+            const canvas = document.getElementById('flowerCanvas');
+            const ctx = canvas.getContext('2d');
+
+            const petalCount = 10;
+            const petalLength = 20;
+            const petalWidth = 10;
+
+            for (let y = 0; y < canvas.height; y += 100) {
+                for (let x = 0; x < canvas.width; x += 100) {
+                    drawFlower(ctx, x, y, petalCount, petalLength, petalWidth, rotation);
+                }
+            }
+        }
+
+        let rotation = 0;
+
+        function animate() {
+            const canvas = document.getElementById('flowerCanvas');
+            const ctx = canvas.getContext('2d');
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            drawPattern(rotation);
+            rotation += 0.01;
+
+            requestAnimationFrame(animate);
+        }
+
+        window.onload = function() {
+            animate();
+        };
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+</body>
+</html>
